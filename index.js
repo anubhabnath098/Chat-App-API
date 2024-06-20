@@ -10,7 +10,7 @@ require('dotenv').config();
 
 const allowedOrigins = [
     "http://localhost:3000",
-    "chat-app-blond-nine.vercel.app"
+    "https://chat-app-blond-nine.vercel.app"
 
 ]
 
