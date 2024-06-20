@@ -42,7 +42,7 @@ const server = app.listen(process.env.PORT,()=>{
 const io=socket(server,{
     cors:{
         origin:allowedOrigins,
-        Credentials:true,
+        credentials:true,
     }
 })
 
