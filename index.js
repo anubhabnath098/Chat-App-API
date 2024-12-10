@@ -10,6 +10,7 @@ require('dotenv').config();
 
 const allowedOrigins = [
     "http://localhost:3000",
+    "http://localhost:3001",
     "https://chat-app-blond-nine.vercel.app"
 
 ]
@@ -31,7 +32,7 @@ mongoose.connect(process.env.MONGO_URL,{
 }).then(()=>{
     console.log("DB Connection Successful")
 }).catch((err)=>{
-    console.log(err.message);
+    console.log("Error-->",err.message);
 })
 
 const server = app.listen(process.env.PORT,()=>{
@@ -56,8 +57,15 @@ io.on("connection", (socket)=>{
 
     socket.on("send-msg", (data)=>{
         const sendUserSocket = onlineUsers.get(data.to);
+        console.log(`Sending message to user: ${data.to}, socket: ${sendUserSocket}`);
         if(sendUserSocket){
-            socket.to(sendUserSocket).emit("msg-receive", data.message);
+          // console.log(data);
+            socket.to(sendUserSocket).emit("msg-receive", {message:data.message, image:data.image});
+            console.log(`Message sent to user: ${data.to}`);
         }
+       else {
+          console.log(`User with ID ${data.to} is not online.`);
+      }
     });
 })
+  

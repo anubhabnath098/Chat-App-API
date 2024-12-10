@@ -4,8 +4,12 @@ const messageSchema = new mongoose.Schema({
         message:{
             text:{
                 type:String,
-                required:true,
+                required:false,
             },
+            image:{
+                type:String,
+                required:false
+            }
         },
         users:Array,
         sender:{
