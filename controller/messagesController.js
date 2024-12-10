@@ -1,10 +1,12 @@
 const messageModel = require("../models/messageModel")
 
+
 module.exports.addMessage=async(req, res, next) =>{
     try{
-        const {from, to, message} = req.body;
+        const {from, to, message, image} = req.body;
+        //console.log(message, image);
         const data = await messageModel.create({
-            message:{text:message},
+            message:{text:message,image:image},
             users:[from, to],
             sender:from,
         })
@@ -26,7 +28,10 @@ module.exports.getAllMessage=async(req, res, next)=>{
         const projectMessages = messages.map((msg)=>{
             return{
                 fromSelf:msg.sender.toString() === from,
-                message: msg.message.text
+                message: {
+                    text:msg.message.text,
+                    image:msg.message.image
+                }
             };
         });
         res.json(projectMessages);
